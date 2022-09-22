@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
+import Field from "../../utils/field";
 import Modal from "../../utils/modal";
 import Scaffold from "../../utils/scaffold";
 import Table from "../../utils/table";
 import Tabs from "../../utils/tabs";
+import { upload } from "../../utils/upload";
 import { dashboardTabs, links, testRecords, testTableHeaders } from "../config"
 
 export default function DoctorDashboard() {
     let today = new Date();
     const [currentTab, setCurrentTab] = useState("Current Applications")
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     const [currentSessions, setCurrentSessions] = useState([]);
     const [previousSessions, setPreviousSessions] = useState([]);
+
+    const [symptoms, setSymptoms] = useState("");
+    const [diagnosis, setDiagnosis] = useState("");
+    const [prescription, setPrescription] = useState("");
+    const [scansReport, setScansReport] = useState([]);
+    const [isCompleted, setIsCompleted] = useState(false);
 
     useEffect(() => {
         let current = [];
@@ -27,6 +35,10 @@ export default function DoctorDashboard() {
         setPreviousSessions(previous);
     }, [])
 
+    useEffect(() => {
+        // TODO: fetch the details from the backend once the current record is changed
+    }, []) // TODO: add current record as a dependency
+
     const handleTabClick = (value) => {
         console.log(value)
         if (value != currentTab) setCurrentTab(value)
@@ -34,7 +46,15 @@ export default function DoctorDashboard() {
 
     const handleEdit = (value) => {
         console.log(value)
+        // TODO: change some state variable to set the current record
     }
+
+    const scanUploadHandler = (e) => {
+        console.log(e.target.files)
+        upload(e.target.files)
+        setScansReport(e.target.files);
+    }
+
 
     return (
         <Scaffold links={links} page="Dashboard">
@@ -53,11 +73,11 @@ export default function DoctorDashboard() {
                 )}
             </div>
             <Modal isOpen={isOpen} onCancel={() => setIsOpen(prev => !prev)} onSubmit={() => setIsOpen(prev => !prev)} >
-                {/* <Field label="Adhaar Number" type="text" onChange={(e) => setAdhaar(e.target.value)} />
-                <Field label="Name" type="text" onChange={(e) => setName(e.target.value)} />
-                <Field label="Date of Birth" type="date" onChange={(e) => setDob(e.target.value)} />
-                <Field label="Phone Number" type="tel" onChange={(e) => setPhone(e.target.value)} />
-                <Field label="Address" type="text" onChange={(e) => setAddress(e.target.value)} /> */}
+                <Field label="Symptoms" type="text" onChange={(e) => setSymptoms(e.target.value)} />
+                <Field label="Likely Diagnosis" type="text" onChange={(e) => setDiagnosis(e.target.value)} />
+                <Field label="Medicines" type="tel" onChange={(e) => setPrescription(e.target.value)} />
+                <Field label="Scans Report" type="file" onChange={scanUploadHandler} multiple/>
+                {/* <Field label="Scanned Reports" type="text" onChange={(e) => setAddress(e.target.value)} /> */}
             </Modal>
         </Scaffold>
     )
