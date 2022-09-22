@@ -1,6 +1,31 @@
 import { FaPlus } from "react-icons/fa"
 
-export default function Table() {
+function TableRow(props){
+    return (
+        <tr className="bg-white border-b hover:bg-gray-50">
+                        <th
+                            scope="row"
+                            className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
+                        >
+                            {props.patientName}
+                        </th>
+                        <td className="py-4 px-6">{props.date}</td>
+                        <td className="py-4 px-6">{props.time}</td>
+                        <td className="py-4 px-6">{props.appointmentType}</td>
+                        <td className="py-4 px-6">{props.likelyDiagnosis}</td>
+                        <td className="py-4 px-6">
+                            <button
+                                onClick={()=>props.onClick(props)}
+                                className="font-medium text-blue-600 hover:underline"
+                            >
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+    )
+}
+
+export default function Table(props) {
     return (
         <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
             <div className="pb-4 px-2 pt-2 bg-white flex justify-between">
@@ -32,225 +57,20 @@ export default function Table() {
                     </button>
                 </div>
             </div>
-            <table className="w-full text-sm text-left text-gray-500">
+            <table className="w-full text-sm text-left text-gray-500 mt-4">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" className="p-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="checkbox-all-search"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                />
-                                <label htmlFor="checkbox-all-search" className="sr-only">
-                                    checkbox
-                                </label>
-                            </div>
-                        </th>
-                        <th scope="col" className="py-3 px-6">
-                            Product name
-                        </th>
-                        <th scope="col" className="py-3 px-6">
-                            Color
-                        </th>
-                        <th scope="col" className="py-3 px-6">
-                            Category
-                        </th>
-                        <th scope="col" className="py-3 px-6">
-                            Price
-                        </th>
-                        <th scope="col" className="py-3 px-6">
-                            Action
-                        </th>
+                        {props.head && props.head.map((headField) => (
+                            <th scope="col" className="py-3 px-6">
+                            {headField}
+                            </th>
+                        ))}
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="bg-white border-b hover:bg-gray-50">
-                        <td className="p-4 w-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="checkbox-table-search-1"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                />
-                                <label htmlFor="checkbox-table-search-1" className="sr-only">
-                                    checkbox
-                                </label>
-                            </div>
-                        </td>
-                        <th
-                            scope="row"
-                            className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-                        >
-                            Apple MacBook Pro 17"
-                        </th>
-                        <td className="py-4 px-6">Sliver</td>
-                        <td className="py-4 px-6">Laptop</td>
-                        <td className="py-4 px-6">$2999</td>
-                        <td className="py-4 px-6">
-                            <a
-                                href="#"
-                                className="font-medium text-blue-600 hover:underline"
-                            >
-                                Edit
-                            </a>
-                        </td>
-                    </tr>
-                    <tr className="bg-white border-b hover:bg-gray-50">
-                        <td className="p-4 w-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="checkbox-table-search-2"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                />
-                                <label htmlFor="checkbox-table-search-2" className="sr-only">
-                                    checkbox
-                                </label>
-                            </div>
-                        </td>
-                        <th
-                            scope="row"
-                            className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-                        >
-                            Microsoft Surface Pro
-                        </th>
-                        <td className="py-4 px-6">White</td>
-                        <td className="py-4 px-6">Laptop PC</td>
-                        <td className="py-4 px-6">$1999</td>
-                        <td className="py-4 px-6">
-                            <a
-                                href="#"
-                                className="font-medium text-blue-600 hover:underline"
-                            >
-                                Edit
-                            </a>
-                        </td>
-                    </tr>
-                    <tr className="bg-white border-b hover:bg-gray-50">
-                        <td className="p-4 w-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="checkbox-table-search-3"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                />
-                                <label htmlFor="checkbox-table-search-3" className="sr-only">
-                                    checkbox
-                                </label>
-                            </div>
-                        </td>
-                        <th
-                            scope="row"
-                            className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-                        >
-                            Magic Mouse 2
-                        </th>
-                        <td className="py-4 px-6">Black</td>
-                        <td className="py-4 px-6">Accessories</td>
-                        <td className="py-4 px-6">$99</td>
-                        <td className="py-4 px-6">
-                            <a
-                                href="#"
-                                className="font-medium text-blue-600 hover:underline"
-                            >
-                                Edit
-                            </a>
-                        </td>
-                    </tr>
-                    <tr className="bg-white border-b hover:bg-gray-50">
-                        <td className="p-4 w-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="checkbox-table-3"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                />
-                                <label htmlFor="checkbox-table-3" className="sr-only">
-                                    checkbox
-                                </label>
-                            </div>
-                        </td>
-                        <th
-                            scope="row"
-                            className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-                        >
-                            Apple Watch
-                        </th>
-                        <td className="py-4 px-6">Silver</td>
-                        <td className="py-4 px-6">Accessories</td>
-                        <td className="py-4 px-6">$179</td>
-                        <td className="py-4 px-6">
-                            <a
-                                href="#"
-                                className="font-medium text-blue-600 hover:underline"
-                            >
-                                Edit
-                            </a>
-                        </td>
-                    </tr>
-                    <tr className="bg-white border-b hover:bg-gray-50">
-                        <td className="p-4 w-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="checkbox-table-3"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                />
-                                <label htmlFor="checkbox-table-3" className="sr-only">
-                                    checkbox
-                                </label>
-                            </div>
-                        </td>
-                        <th
-                            scope="row"
-                            className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-                        >
-                            iPad
-                        </th>
-                        <td className="py-4 px-6">Gold</td>
-                        <td className="py-4 px-6">Tablet</td>
-                        <td className="py-4 px-6">$699</td>
-                        <td className="py-4 px-6">
-                            <a
-                                href="#"
-                                className="font-medium text-blue-600 hover:underline"
-                            >
-                                Edit
-                            </a>
-                        </td>
-                    </tr>
-                    <tr className="bg-white hover:bg-gray-50">
-                        <td className="p-4 w-4">
-                            <div className="flex items-center">
-                                <input
-                                    id="checkbox-table-3"
-                                    type="checkbox"
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"
-                                />
-                                <label htmlFor="checkbox-table-3" className="sr-only">
-                                    checkbox
-                                </label>
-                            </div>
-                        </td>
-                        <th
-                            scope="row"
-                            className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-                        >
-                            Apple iMac 27"
-                        </th>
-                        <td className="py-4 px-6">Silver</td>
-                        <td className="py-4 px-6">PC Desktop</td>
-                        <td className="py-4 px-6">$3999</td>
-                        <td className="py-4 px-6">
-                            <a
-                                href="#"
-                                className="font-medium text-blue-600 hover:underline"
-                            >
-                                Edit
-                            </a>
-                        </td>
-                    </tr>
+                    {props.data && props.data.map((item) => (
+                        <TableRow patientName={item.patientName} date={item.date} time={item.time} appointmentType={item.appointmentType} likelyDiagnosis={item.likelyDiagnosis} onClick={props.onClick} />
+                    ))}
                 </tbody>
             </table>
         </div>

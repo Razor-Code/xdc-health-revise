@@ -8,12 +8,54 @@ const links = [
         name: "Profile",
         image: "/assets/profile.png",
         link: "/doctor/profile"
-    }
+    },
 ]
 
 const dashboardTabs = [
-    "Upcoming Applications",
+    "Current Applications",
     "Previous Applications"
 ]
 
-export { links, dashboardTabs }
+const testTableHeaders = [
+    "Patient Name",
+    "Date",
+    "Time",
+    "Appointment Type",
+    "Likey Diagnosis",
+    "Update"
+]
+
+const testRecords = [
+    {
+        patientName: "John Doe",
+        date: "12/12/2021",
+        time: "12:00 PM",
+        appointmentType: "General Visit",
+        likelyDiagnosis: "Covid-19",
+        isCompleted: false
+    },
+    {
+        patientName: "Jane Doe",
+        date: "12/12/2021",
+        time: "12:00 PM",
+        appointmentType: "Routine Visit",
+        likelyDiagnosis: "Cold",
+        isCompleted: false
+    },{
+        patientName: "Manish Doe",
+        date: "12/12/2021",
+        time: "12:00 PM",
+        appointmentType: "Routine Visit",
+        likelyDiagnosis: "Cough",
+        isCompleted: true
+    },{
+        patientName: "Harish Bhai",
+        date: "12/12/2021",
+        time: "12:00 PM",
+        appointmentType: "Vaccination",
+        likelyDiagnosis: "Covid-19",
+        isCompleted: true
+    },
+]
+
+export { links, dashboardTabs, testRecords, testTableHeaders }
