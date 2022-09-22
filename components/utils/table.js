@@ -3,17 +3,18 @@ import { FaPlus } from "react-icons/fa"
 function TableRow(props){
     return (
         <tr className="bg-white border-b hover:bg-gray-50">
-                        <th
+                        {props.patientName && (<th
                             scope="row"
                             className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
                         >
                             {props.patientName}
-                        </th>
+                        </th>)}
                         <td className="py-4 px-6">{props.date}</td>
                         <td className="py-4 px-6">{props.time}</td>
                         <td className="py-4 px-6">{props.appointmentType}</td>
                         <td className="py-4 px-6">{props.likelyDiagnosis}</td>
-                        <td className="py-4 px-6">
+                        {props.onClick && (
+                            <td className="py-4 px-6">
                             <button
                                 onClick={()=>props.onClick(props)}
                                 className="font-medium text-blue-600 hover:underline"
@@ -21,6 +22,7 @@ function TableRow(props){
                                 Edit
                             </button>
                         </td>
+                        )}
                     </tr>
     )
 }
@@ -50,12 +52,15 @@ export default function Table(props) {
                         placeholder="Search"
                     />
                 </div>
-                <div>
-                    <button className="flex items-center px-3 py-[0.35rem] font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                        <FaPlus />
-                        <span className="mx-2">Add</span>
-                    </button>
-                </div>
+                {props.editable && (
+                    <div>
+                        <button className="flex items-center px-3 py-[0.35rem] font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                            <FaPlus />
+                            <span className="mx-2">Add</span>
+                        </button>
+                    </div>
+                )}
+                
             </div>
             <table className="w-full text-sm text-left text-gray-500 mt-4">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">

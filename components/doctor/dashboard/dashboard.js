@@ -47,9 +47,9 @@ export default function DoctorDashboard() {
             </div>
             <div>
                 {currentTab == "Current Applications" ? (
-                    <Table head={testTableHeaders} data={currentSessions} onClick={handleEdit}/>
+                    <Table head={testTableHeaders} data={currentSessions} onClick={handleEdit} editable/>
                 ) : (
-                    <Table head={testTableHeaders} data={previousSessions} onClick={handleEdit}/>
+                    <Table head={testTableHeaders} data={previousSessions} onClick={handleEdit} editable/>
                 )}
             </div>
             <Modal isOpen={isOpen} onCancel={() => setIsOpen(prev => !prev)} onSubmit={() => setIsOpen(prev => !prev)} />
