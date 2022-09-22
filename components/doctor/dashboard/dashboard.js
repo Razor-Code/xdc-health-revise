@@ -13,13 +13,13 @@ export default function DoctorDashboard() {
     const [currentSessions, setCurrentSessions] = useState([]);
     const [previousSessions, setPreviousSessions] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         let current = [];
         let previous = [];
-        testRecords.forEach((record)=>{
-            if(record.isCompleted){
+        testRecords.forEach((record) => {
+            if (record.isCompleted) {
                 previous.push(record);
-            }else{
+            } else {
                 current.push(record);
             }
         })
@@ -47,12 +47,18 @@ export default function DoctorDashboard() {
             </div>
             <div>
                 {currentTab == "Current Applications" ? (
-                    <Table head={testTableHeaders} data={currentSessions} onClick={handleEdit} editable/>
+                    <Table head={testTableHeaders} data={currentSessions} onClick={handleEdit} editable />
                 ) : (
-                    <Table head={testTableHeaders} data={previousSessions} onClick={handleEdit} editable/>
+                    <Table head={testTableHeaders} data={previousSessions} onClick={handleEdit} editable />
                 )}
             </div>
-            <Modal isOpen={isOpen} onCancel={() => setIsOpen(prev => !prev)} onSubmit={() => setIsOpen(prev => !prev)} />
+            <Modal isOpen={isOpen} onCancel={() => setIsOpen(prev => !prev)} onSubmit={() => setIsOpen(prev => !prev)} >
+                {/* <Field label="Adhaar Number" type="text" onChange={(e) => setAdhaar(e.target.value)} />
+                <Field label="Name" type="text" onChange={(e) => setName(e.target.value)} />
+                <Field label="Date of Birth" type="date" onChange={(e) => setDob(e.target.value)} />
+                <Field label="Phone Number" type="tel" onChange={(e) => setPhone(e.target.value)} />
+                <Field label="Address" type="text" onChange={(e) => setAddress(e.target.value)} /> */}
+            </Modal>
         </Scaffold>
     )
 }

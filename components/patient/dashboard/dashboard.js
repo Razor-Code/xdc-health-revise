@@ -1,4 +1,4 @@
-import Card from "../../utils/cards"
+import Card from "../../utils/card"
 import Scaffold from "../../utils/scaffold"
 import { links, patientDetails } from "../config"
 

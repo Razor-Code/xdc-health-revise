@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import Card from "../../utils/cards"
+import Card from "../../utils/card"
 import Scaffold from "../../utils/scaffold"
 import { links, testRecords, testTableHeaders } from "../config"
 import Table from "../../utils/table"

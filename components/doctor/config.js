@@ -58,4 +58,11 @@ const testRecords = [
     },
 ]
 
-export { links, dashboardTabs, testRecords, testTableHeaders }
+const doctorDetails = {
+    Aadhar: "123456789012",
+    Name: "John Doe",
+    DOB: "12/02/2021",
+    Phone: "1234567890",
+  }
+
+export { links, dashboardTabs, testRecords, testTableHeaders, doctorDetails }
