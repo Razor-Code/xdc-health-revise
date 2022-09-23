@@ -1,5 +1,7 @@
 import {useWeb3} from "@3rdweb/hooks"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import { getContract, loadWeb3 , abi} from "../abi"
 import Field from "../utils/field"
 import Modal from "../utils/modal"
 
@@ -21,17 +23,39 @@ export default function LandingPage(){
     const { address, connectWallet, } = useWeb3();
     const [patientModal, setPatientModal] = useState(false)
     const [adhaar, setAdhaar] = useState("")
+    const router = useRouter()
+    let contract;
+
+    // organisation variables
+    const [orgModal, setOrgModal] = useState(false)
+    const [orgName, setOrgName] = useState("")
+    const [orgDesc, setOrgDesc] = useState("")
+    const [orgWebsite, setOrgWebsite] = useState("")
 
     useEffect(()=>{
       // TODO: fetch the data from the smart contract and redirect to the correct page
     }, [address])
 
-    const handleConnect = async () => {
+    const handleConnect = async (value) => {
         await connectWallet("injected")
+        if(value == "organisation"){
+          setOrgModal(true)
+        }
+    }
+
+    const handleSubmitOrg = async () => {
+      await loadWeb3()
+      const cont = await getContract()
+      // await cont.createOrganisation(orgName, orgDesc, orgWebsite);
+      console.log(cont)
+      let a = await cont.findSenderType()
+      console.log(a);
+    
     }
 
     const handleSubmitPatient = async () => {
       // TODO: check if it is a valid patient
+      // let result = await contract.methods.findSenderType()
       // TODO: register it in the cookie
     }
 
@@ -40,19 +64,24 @@ export default function LandingPage(){
         <div className="container px-6 py-8 mx-auto">
           <img src="/assets/xdc-health-icon.svg" className="h-20 w-20 mx-auto"/>
           <h1 className="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl">
-            XDC Health
+            XDC Health {address}
           </h1>
           <p className="max-w-2xl mx-auto mt-4 text-center text-gray-500 xl:mt-6">
             A decentralized health record management system
           </p>
           <div className="grid grid-cols-1 gap-8 mt-6 xl:mt-12 xl:gap-12 md:grid-cols-2 lg:grid-cols-3 select-none">
-              <Card type="Hospital" image="/assets/admin.png" onClick={handleConnect}/>
+              <Card type="Hospital" image="/assets/admin.png" onClick={()=>handleConnect("organisation")}/>
               <Card type="Patient" image="/assets/patient.png" onClick={()=>setPatientModal(true)}/>
-              <Card type="Doctor" image="/assets/doctor.png" onClick={handleConnect}/>
+              <Card type="Doctor" image="/assets/doctor.png" onClick={()=>handleConnect("doctor")}/>
           </div>
         </div>
         <Modal isOpen={patientModal} onSubmit={handleSubmitPatient} onCancel={()=>setPatientModal(false)}>
           <Field label="Adhaar Number" type="text" onChange={(e) => setAdhaar(e.target.value)} />
+        </Modal>
+        <Modal isOpen={orgModal} onSubmit={handleSubmitOrg} onCancel={()=>setOrgModal(false)}>
+          <Field label="Organisation Name" type="text" onChange={(e) => setOrgName(e.target.value)} />
+          <Field label="Description" type="text" onChange={(e) => setOrgDesc(e.target.value)} />
+          <Field label="Website" type="text" onChange={(e) => setOrgWebsite(e.target.value)} />
         </Modal>
       </div>
     )
