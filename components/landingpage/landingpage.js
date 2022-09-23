@@ -1,13 +1,9 @@
 import { useWeb3 } from "@3rdweb/hooks"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { loadWeb3 } from "../abi"
+import { getContract, loadWeb3 } from "../abi"
 import Field from "../utils/field"
 import Modal from "../utils/modal"
-import Web3 from "web3"
-import abi from "../abi.json"
-import { FaWindows } from "react-icons/fa"
-import { getAccountPath } from "ethers/lib/utils"
 
 function Card(props) {
   return (
@@ -38,25 +34,16 @@ export default function LandingPage() {
 
   useEffect(() => {
     // TODO: fetch the data from the smart contract and redirect to the correct page
+    if(address){
+      async function fetchData() {
+        await loadWeb3()
+        contract = await getContract()
+        const result = await contract.methods.findSenderType().send({ from: address })
+        console.log(result)
+      }
+      fetchData()
+    }
   }, [address])
-  useEffect(() => {
-    if (FaWindows.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-    }
-    else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-    } else {
-      window.alert("xinfin wallet not found")
-    }
-
-    var acc = "0xfCe47A914f83eb7973Bd146294155b2887b61B8b"
-    const web3 = window.web3
-    console.log(web3)
-    const contract = new web3.eth.Contract(abi, "0xd67d297c5c8b25b18a7e1ae4c40d56f0fe5fe0fa")
-    console.log(contract)
-    let res = contract.methods.findSenderType().send({ from: "0x4fa27ec2cb22fe4596fb00df9a8cc36b8a995426" })
-    console.log(res)
-  }, [])
 
   const handleConnect = async (value) => {
     await connectWallet("injected")
@@ -66,23 +53,10 @@ export default function LandingPage() {
   }
 
   const handleSubmitOrg = async () => {
-    // await loadWeb3()
-    // const cont = await getContract()
-    // await cont.createOrganisation(orgName, orgDesc, orgWebsite);
-    // console.log(cont)
-    // let a = await cont.findSenderType()
-    // console.log(a);
-
+    await loadWeb3()
+    const cont = await getContract()
+    await cont.methods.createOrganisation(orgName, orgDesc, orgWebsite).send({ from: address })
   }
-
-
-  // loadBlockchainData = async () => {
-  //   const web3 = window.web3;
-  //   const accounts = await web3.eth.getAccounts();
-  //   var Web3 = require('web3');
-  //   var web = Web3.givenProvider
-  //   console.log(web)
-  // }
 
   const handleSubmitPatient = async () => {
     // TODO: check if it is a valid patient
