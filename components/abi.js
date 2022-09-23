@@ -1,5 +1,5 @@
 
-var address = "0xd67d297c5c8b25b18a7e1ae4c40d56f0fe5fe0fa";
+var address = "0xc7a6a78c2266360e00a62d3140cfa4c752e046fb";
 var abi = require("./abi.json");
 import Web3 from 'xdc3'
 

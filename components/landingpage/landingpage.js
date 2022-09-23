@@ -23,6 +23,7 @@ export default function LandingPage() {
   const { address, connectWallet, } = useWeb3();
   const [patientModal, setPatientModal] = useState(false)
   const [adhaar, setAdhaar] = useState("")
+  const [refresh, setRefresh] = useState(false)
   const router = useRouter()
   let contract;
 
@@ -38,12 +39,16 @@ export default function LandingPage() {
       async function fetchData() {
         await loadWeb3()
         contract = await getContract()
-        const result = await contract.methods.findSenderType().send({ from: address })
-        console.log(result)
+        const result = await contract.methods.findSenderType(address).call()
+        if(result == "admin"){
+          router.push("/admin")
+        } else if(result == "doctor"){
+          router.push("/doctor")
+        }
       }
       fetchData()
     }
-  }, [address])
+  }, [address, refresh])
 
   const handleConnect = async (value) => {
     await connectWallet("injected")
@@ -56,12 +61,20 @@ export default function LandingPage() {
     await loadWeb3()
     const cont = await getContract()
     await cont.methods.createOrganisation(orgName, orgDesc, orgWebsite).send({ from: address })
+    setRefresh(!refresh)
   }
 
   const handleSubmitPatient = async () => {
     // TODO: check if it is a valid patient
-    // let result = await contract.methods.findSenderType()
+    await loadWeb3()
+    const cont = await getContract()
+    let details = await cont.methods.getPatientDetails(adhaar).call()
     // TODO: register it in the cookie
+    if(details) {
+      // register adhaar in the cookie
+      document.cookie = `adhaar=${adhaar}`
+      router.push("/patient")
+    }
   }
 
   return (
